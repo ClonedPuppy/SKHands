@@ -21,43 +21,43 @@ namespace SKHands
         Pose leftHandPose;
         Matrix4x4 floorTransform;
 
-        //Hand leftHand;
+        Hand leftHand;
 
-        //ModelNode palm;
+        ModelNode palm;
 
-        //// Thumb Nodes
-        //ModelNode thumbMeta;
-        //ModelNode thumbProxi;
-        //ModelNode thumbDist;
-        //ModelNode thumbTip;
+        // Thumb Nodes
+        ModelNode thumbMeta;
+        ModelNode thumbProxi;
+        ModelNode thumbDist;
+        ModelNode thumbTip;
 
-        //// Index Nodes
-        //ModelNode indexMeta;
-        //ModelNode indexProxi;
-        //ModelNode indexInter;
-        //ModelNode indexDist;
-        //ModelNode indexTip;
+        // Index Nodes
+        ModelNode indexMeta;
+        ModelNode indexProxi;
+        ModelNode indexInter;
+        ModelNode indexDist;
+        ModelNode indexTip;
 
-        //// Middle Nodes
-        //ModelNode middleMeta;
-        //ModelNode middleProxi;
-        //ModelNode middleInter;
-        //ModelNode middleDist;
-        //ModelNode middleTip;
+        // Middle Nodes
+        ModelNode middleMeta;
+        ModelNode middleProxi;
+        ModelNode middleInter;
+        ModelNode middleDist;
+        ModelNode middleTip;
 
-        //// Ring Nodes
-        //ModelNode ringMeta;
-        //ModelNode ringProxi;
-        //ModelNode ringInter;
-        //ModelNode ringDist;
-        //ModelNode ringTip;
+        // Ring Nodes
+        ModelNode ringMeta;
+        ModelNode ringProxi;
+        ModelNode ringInter;
+        ModelNode ringDist;
+        ModelNode ringTip;
 
-        //// Pinky Nodes
-        //ModelNode pinkyMeta;
-        //ModelNode pinkyProxi;
-        //ModelNode pinkyInter;
-        //ModelNode pinkyDist;
-        //ModelNode pinkyTip;
+        // Pinky Nodes
+        ModelNode pinkyMeta;
+        ModelNode pinkyProxi;
+        ModelNode pinkyInter;
+        ModelNode pinkyDist;
+        ModelNode pinkyTip;
 
         float angleX = -90f;
         float angleY = 0f;
@@ -79,47 +79,47 @@ namespace SKHands
 
             Input.HandVisible(Handed.Left, false);
 
-            //leftHand = Input.Hand(Handed.Left);
+            leftHand = Input.Hand(Handed.Left);
 
-            //leftHandPose = Input.Hand(Handed.Left).palm;
+            leftHandPose = Input.Hand(Handed.Left).palm;
 
             menuPose = new Pose(0.5f, 0, -0.5f, Quat.LookDir(-1, 0, 1));
 
-            //palm = hand.FindNode("Palm");
+            palm = hand.FindNode("Palm");
 
-            //// Thumb Nodes
-            //thumbMeta = hand.FindNode("ThumbMeta");
-            //thumbProxi = hand.FindNode("ThumbProxi");
-            //thumbDist = hand.FindNode("ThumbDist");
-            //thumbTip = hand.FindNode("ThumbTip");
+            // Thumb Nodes
+            thumbMeta = hand.FindNode("ThumbMeta");
+            thumbProxi = hand.FindNode("ThumbProxi");
+            thumbDist = hand.FindNode("ThumbDist");
+            thumbTip = hand.FindNode("ThumbTip");
 
-            //// Index Nodes
-            //indexMeta = hand.FindNode("IndexMeta");
-            //indexProxi = hand.FindNode("IndexProxi");
-            //indexInter = hand.FindNode("IndexInter");
-            //indexDist = hand.FindNode("IndexDist");
-            //indexTip = hand.FindNode("IndexTip");
+            // Index Nodes
+            indexMeta = hand.FindNode("IndexMeta");
+            indexProxi = hand.FindNode("IndexProxi");
+            indexInter = hand.FindNode("IndexInter");
+            indexDist = hand.FindNode("IndexDist");
+            indexTip = hand.FindNode("IndexTip");
 
-            //// Middle Nodes
-            //middleMeta = hand.FindNode("MiddleMeta");
-            //middleProxi = hand.FindNode("MiddleProxi");
-            //middleInter = hand.FindNode("MiddleInter");
-            //middleDist = hand.FindNode("MiddleDist");
-            //middleTip = hand.FindNode("MiddleTip");
+            // Middle Nodes
+            middleMeta = hand.FindNode("MiddleMeta");
+            middleProxi = hand.FindNode("MiddleProxi");
+            middleInter = hand.FindNode("MiddleInter");
+            middleDist = hand.FindNode("MiddleDist");
+            middleTip = hand.FindNode("MiddleTip");
 
-            //// Ring Nodes
-            //ringMeta = hand.FindNode("RingMeta");
-            //ringProxi = hand.FindNode("RingProxi");
-            //ringInter = hand.FindNode("RingInter");
-            //ringDist = hand.FindNode("RingDist");
-            //ringTip = hand.FindNode("RingTip");
+            // Ring Nodes
+            ringMeta = hand.FindNode("RingMeta");
+            ringProxi = hand.FindNode("RingProxi");
+            ringInter = hand.FindNode("RingInter");
+            ringDist = hand.FindNode("RingDist");
+            ringTip = hand.FindNode("RingTip");
 
-            //// Pinky Nodes
-            //pinkyMeta = hand.FindNode("PinkyMeta");
-            //pinkyProxi = hand.FindNode("PinkyProxi");
-            //pinkyInter = hand.FindNode("PinkyInter");
-            //pinkyDist = hand.FindNode("PinkyDist");
-            //pinkyTip = hand.FindNode("PinkyTip");
+            // Pinky Nodes
+            pinkyMeta = hand.FindNode("PinkyMeta");
+            pinkyProxi = hand.FindNode("PinkyProxi");
+            pinkyInter = hand.FindNode("PinkyInter");
+            pinkyDist = hand.FindNode("PinkyDist");
+            pinkyTip = hand.FindNode("PinkyTip");
         }
 
         public void Step()
@@ -136,7 +136,7 @@ namespace SKHands
             UI.HSlider("ScaleSlider", ref nodeScale, 0.1f, 1, 0);
             UI.WindowEnd();
 
-            //Hierarchy.Push(leftHandPose.ToMatrix());
+            Hierarchy.Push(leftHandPose.ToMatrix());
 
             //float scale = Hierarchy.ToLocalDirection(Vec3.UnitX).Magnitude;
             //for (int n = 0; n < leftHand.fingers.Length; n++)
@@ -147,45 +147,45 @@ namespace SKHands
             //    //Text.Add(node.Name, Matrix.S(scale) * node.ModelTransform, TextAlign.TopCenter, TextAlign.TopCenter);
             //}
 
-            //palm.ModelTransform = Input.Hand(Handed.Left).palm.ToMatrix();
+            palm.ModelTransform = Input.Hand(Handed.Left).palm.ToMatrix();
 
-            //// Thumb
-            //thumbMeta.ModelTransform = Matrix.TRS(leftHand.Get(0, 0).position, leftHand.Get(0, 0).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //thumbProxi.ModelTransform = Matrix.TRS(leftHand.Get(0, 1).position, leftHand.Get(0, 1).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //thumbDist.ModelTransform = Matrix.TRS(leftHand.Get(0, 2).position, leftHand.Get(0, 2).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //thumbTip.ModelTransform = Matrix.TRS(leftHand.Get(0, 3).position, leftHand.Get(0, 3).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            // Thumb
+            thumbMeta.ModelTransform = Matrix.TRS(leftHand.Get(0, 0).position, leftHand.Get(0, 0).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            thumbProxi.ModelTransform = Matrix.TRS(leftHand.Get(0, 1).position, leftHand.Get(0, 1).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            thumbDist.ModelTransform = Matrix.TRS(leftHand.Get(0, 2).position, leftHand.Get(0, 2).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            thumbTip.ModelTransform = Matrix.TRS(leftHand.Get(0, 3).position, leftHand.Get(0, 3).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
 
-            //// Index
-            //indexMeta.ModelTransform = Matrix.TRS(leftHand.Get(1, 0).position, leftHand.Get(1, 0).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //indexProxi.ModelTransform = Matrix.TRS(leftHand.Get(1, 1).position, leftHand.Get(1, 1).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //indexInter.ModelTransform = Matrix.TRS(leftHand.Get(1, 2).position, leftHand.Get(1, 2).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //indexDist.ModelTransform = Matrix.TRS(leftHand.Get(1, 3).position, leftHand.Get(1, 3).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //indexTip.ModelTransform = Matrix.TRS(leftHand.Get(1, 4).position, leftHand.Get(1, 4).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            // Index
+            indexMeta.ModelTransform = Matrix.TRS(leftHand.Get(1, 0).position, leftHand.Get(1, 0).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            indexProxi.ModelTransform = Matrix.TRS(leftHand.Get(1, 1).position, leftHand.Get(1, 1).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            indexInter.ModelTransform = Matrix.TRS(leftHand.Get(1, 2).position, leftHand.Get(1, 2).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            indexDist.ModelTransform = Matrix.TRS(leftHand.Get(1, 3).position, leftHand.Get(1, 3).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            indexTip.ModelTransform = Matrix.TRS(leftHand.Get(1, 4).position, leftHand.Get(1, 4).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
 
-            //// Middle
-            //middleMeta.ModelTransform = Matrix.TRS(leftHand.Get(2, 0).position, leftHand.Get(2, 0).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //middleProxi.ModelTransform = Matrix.TRS(leftHand.Get(2, 1).position, leftHand.Get(2, 1).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //middleInter.ModelTransform = Matrix.TRS(leftHand.Get(2, 2).position, leftHand.Get(2, 2).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //middleDist.ModelTransform = Matrix.TRS(leftHand.Get(2, 3).position, leftHand.Get(2, 3).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //middleTip.ModelTransform = Matrix.TRS(leftHand.Get(2, 4).position, leftHand.Get(2, 4).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            // Middle
+            middleMeta.ModelTransform = Matrix.TRS(leftHand.Get(2, 0).position, leftHand.Get(2, 0).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            middleProxi.ModelTransform = Matrix.TRS(leftHand.Get(2, 1).position, leftHand.Get(2, 1).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            middleInter.ModelTransform = Matrix.TRS(leftHand.Get(2, 2).position, leftHand.Get(2, 2).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            middleDist.ModelTransform = Matrix.TRS(leftHand.Get(2, 3).position, leftHand.Get(2, 3).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            middleTip.ModelTransform = Matrix.TRS(leftHand.Get(2, 4).position, leftHand.Get(2, 4).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
 
-            //// Ring
-            //ringMeta.ModelTransform = Matrix.TRS(leftHand.Get(3, 0).position, leftHand.Get(3, 0).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //ringProxi.ModelTransform = Matrix.TRS(leftHand.Get(3, 1).position, leftHand.Get(3, 1).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //ringInter.ModelTransform = Matrix.TRS(leftHand.Get(3, 2).position, leftHand.Get(3, 2).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //ringDist.ModelTransform = Matrix.TRS(leftHand.Get(3, 3).position, leftHand.Get(3, 3).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //ringTip.ModelTransform = Matrix.TRS(leftHand.Get(3, 4).position, leftHand.Get(3, 4).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            // Ring
+            ringMeta.ModelTransform = Matrix.TRS(leftHand.Get(3, 0).position, leftHand.Get(3, 0).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            ringProxi.ModelTransform = Matrix.TRS(leftHand.Get(3, 1).position, leftHand.Get(3, 1).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            ringInter.ModelTransform = Matrix.TRS(leftHand.Get(3, 2).position, leftHand.Get(3, 2).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            ringDist.ModelTransform = Matrix.TRS(leftHand.Get(3, 3).position, leftHand.Get(3, 3).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            ringTip.ModelTransform = Matrix.TRS(leftHand.Get(3, 4).position, leftHand.Get(3, 4).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
 
-            //// Pinky
-            //pinkyMeta.ModelTransform = Matrix.TRS(leftHand.Get(4, 0).position, leftHand.Get(4, 0).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //pinkyProxi.ModelTransform = Matrix.TRS(leftHand.Get(4, 1).position, leftHand.Get(4, 1).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //pinkyInter.ModelTransform = Matrix.TRS(leftHand.Get(4, 2).position, leftHand.Get(4, 2).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //pinkyDist.ModelTransform = Matrix.TRS(leftHand.Get(4, 3).position, leftHand.Get(4, 3).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
-            //pinkyTip.ModelTransform = Matrix.TRS(leftHand.Get(4, 4).position, leftHand.Get(4, 4).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            // Pinky
+            pinkyMeta.ModelTransform = Matrix.TRS(leftHand.Get(4, 0).position, leftHand.Get(4, 0).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            pinkyProxi.ModelTransform = Matrix.TRS(leftHand.Get(4, 1).position, leftHand.Get(4, 1).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            pinkyInter.ModelTransform = Matrix.TRS(leftHand.Get(4, 2).position, leftHand.Get(4, 2).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            pinkyDist.ModelTransform = Matrix.TRS(leftHand.Get(4, 3).position, leftHand.Get(4, 3).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
+            pinkyTip.ModelTransform = Matrix.TRS(leftHand.Get(4, 4).position, leftHand.Get(4, 4).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
 
-            //hand.Draw(Matrix.Identity);
+            hand.Draw(Matrix.Identity);
 
-            //Hierarchy.Pop();
+            Hierarchy.Pop();
         }
     }
 
