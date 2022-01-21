@@ -1,10 +1,14 @@
 ﻿using StereoKit;
+using System;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace SKHands
 {
     public class App
     {
+        static List<(float time, HandJoint[] pose)> recordingHand = new List<(float time, HandJoint[] pose)>();
+
         public SKSettings Settings => new SKSettings
         {
             appName = "SKHands",
@@ -128,6 +132,10 @@ namespace SKHands
                 Default.MeshCube.Draw(floorMaterial, floorTransform);
 
             UI.WindowBegin("Settings", ref menuPose);
+            if (UI.Button("Dump Nodes"))
+            {
+                HandshotPose();
+            }
             UI.Label("Global Node Angles");
             UI.HSlider("AngleXSlider", ref angleX, -90, 90, 0);
             UI.HSlider("AngleYSlider", ref angleY, -90, 90, 0);
@@ -147,7 +155,7 @@ namespace SKHands
             //    //Text.Add(node.Name, Matrix.S(scale) * node.ModelTransform, TextAlign.TopCenter, TextAlign.TopCenter);
             //}
 
-            palm.ModelTransform = Input.Hand(Handed.Left).palm.ToMatrix();
+            palm.ModelTransform = Input.Hand(Handed.Left). palm.ToMatrix();
 
             // Thumb
             thumbMeta.ModelTransform = Matrix.TRS(leftHand.Get(0, 0).position, leftHand.Get(0, 0).orientation * Quat.FromAngles(angleX, angleY, angleZ), nodeScale);
@@ -187,6 +195,43 @@ namespace SKHands
 
             Hierarchy.Pop();
         }
+
+        // Unceremoniously ripped from https://github.com/maluoi/StereoKit/blob/master/Examples/StereoKitTest/DebugToolWindow.cs, just added some blender parsing.
+        static void HandshotPose()
+        {
+            Hand h = Input.Hand(Handed.Left);
+            HandJoint[] joints = new HandJoint[27];
+            Array.Copy(h.fingers, 0, joints, 0, 25);
+            joints[25] = new HandJoint(h.palm.position, h.palm.orientation, 0);
+            joints[26] = new HandJoint(h.wrist.position, h.wrist.orientation, 0);
+            recordingHand.Add((Time.Totalf, joints));
+
+            //string result = ($"Tests.Hand(new HandJoint[]{{");
+            //for (int j = 0; j < joints.Length; j++)
+            //{
+            //    result += $"new HandJoint(V.XYZ({joints[j].position.x:0.000}f,{joints[j].position.y:0.000}f,{joints[j].position.z:0.000}f), new Quat({joints[j].orientation.x:0.000}f,{joints[j].orientation.y:0.000}f,{joints[j].orientation.z:0.000}f,{joints[j].orientation.w:0.000}f), {joints[j].radius:0.000}f)";
+            //    if (j < joints.Length - 1)
+            //        result += ",";
+            //}
+            //result += "});";
+            //Log.Info(result);
+
+            string result = "";
+            for (int j = 0; j < joints.Length; j++)
+            {
+                result += $"bpy.ops.object.empty_add(type='PLAIN_AXES', radius=0.01, align='WORLD', location=({joints[j].position.x:0.000},{joints[j].position.y:0.000},{joints[j].position.z:0.000}), rotation=(0, 0, 0), scale=(1, 1, 1))";
+                if (j < joints.Length - 1)
+                    result += "\n";
+            }
+            //result += "_*_";
+            Log.Info(result);
+
+
+        }
     }
 
+
 }
+
+
+// bpy.ops.object.empty_add(type='PLAIN_AXES', radius=0.01, align='WORLD', location=(0,0,0), rotation=(0,0,0), scale=(1,1,1))
