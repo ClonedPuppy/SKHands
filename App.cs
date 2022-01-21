@@ -140,12 +140,13 @@ namespace SKHands
             UI.HSlider("AngleXSlider", ref angleX, -90, 90, 0);
             UI.HSlider("AngleYSlider", ref angleY, -90, 90, 0);
             UI.HSlider("AngleZSlider", ref angleZ, -90, 90, 0);
-            UI.Label("Scale");
+            UI.Label("Node Scale");
             UI.HSlider("ScaleSlider", ref nodeScale, 0.1f, 1, 0);
             UI.WindowEnd();
 
             Hierarchy.Push(leftHandPose.ToMatrix());
 
+            //// Uncomment for node and axis visualization
             //float scale = Hierarchy.ToLocalDirection(Vec3.UnitX).Magnitude;
             //for (int n = 0; n < leftHand.fingers.Length; n++)
             //{
@@ -206,32 +207,17 @@ namespace SKHands
             joints[26] = new HandJoint(h.wrist.position, h.wrist.orientation, 0);
             recordingHand.Add((Time.Totalf, joints));
 
-            //string result = ($"Tests.Hand(new HandJoint[]{{");
-            //for (int j = 0; j < joints.Length; j++)
-            //{
-            //    result += $"new HandJoint(V.XYZ({joints[j].position.x:0.000}f,{joints[j].position.y:0.000}f,{joints[j].position.z:0.000}f), new Quat({joints[j].orientation.x:0.000}f,{joints[j].orientation.y:0.000}f,{joints[j].orientation.z:0.000}f,{joints[j].orientation.w:0.000}f), {joints[j].radius:0.000}f)";
-            //    if (j < joints.Length - 1)
-            //        result += ",";
-            //}
-            //result += "});";
-            //Log.Info(result);
-
-            string result = "";
+            string result = "----------------= Blender code starts here =----------------\n";
             for (int j = 0; j < joints.Length; j++)
             {
                 result += $"bpy.ops.object.empty_add(type='PLAIN_AXES', radius=0.01, align='WORLD', location=({joints[j].position.x:0.000},{joints[j].position.y:0.000},{joints[j].position.z:0.000}), rotation=(0, 0, 0), scale=(1, 1, 1))";
                 if (j < joints.Length - 1)
                     result += "\n";
             }
-            //result += "_*_";
+            result += "\n----------------= Blender code ends here =----------------";
             Log.Info(result);
 
 
         }
     }
-
-
 }
-
-
-// bpy.ops.object.empty_add(type='PLAIN_AXES', radius=0.01, align='WORLD', location=(0,0,0), rotation=(0,0,0), scale=(1,1,1))
