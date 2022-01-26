@@ -132,8 +132,6 @@ public void Step()
             UI.HSlider("ScaleSlider", ref nodeScale, 0.1f, 1, 0);
             UI.WindowEnd();
 
-            //Hand leftHand = Input.Hand(Handed.Left);
-
             //// Uncomment for node and axis visualization
             //float scale = Hierarchy.ToLocalDirection(Vec3.UnitX).Magnitude;
             //for (int n = 0; n < leftHand.fingers.Length; n++)
@@ -144,24 +142,24 @@ public void Step()
             //    //Text.Add(node.Name, Matrix.S(scale) * node.ModelTransform, TextAlign.TopCenter, TextAlign.TopCenter);
             //}
 
-            Quat rot = Quat.FromAngles(angleX, angleY, angleZ);
+
 
             //for (int h = 0; h < (int)Handed.Max; h++)
             //{
-                //Hand hand = Input.Hand((Handed)h);
-                //foreach (JointInfo j in jointInfo)
-                //{
-                //    HandJoint joint = hand[j.finger, j.joint];
-                //    j.node.ModelTransform = Matrix.TRS(joint.position, joint.orientation * rot, nodeScale);
-                //}
+            //Hand hand = Input.Hand((Handed)h);
+            //foreach (JointInfo j in jointInfo)
+            //{
+            //    HandJoint joint = hand[j.finger, j.joint];
+            //    j.node.ModelTransform = Matrix.TRS(joint.position, joint.orientation * rot, nodeScale);
+            //}
 
-                //if (hand.tracked.IsActive())
-                //    leftHandModel.Draw(Matrix.Identity);
+            //if (hand.tracked.IsActive())
+            //    leftHandModel.Draw(Matrix.Identity);
 
             //}
 
 
-
+            Quat rot = Quat.FromAngles(angleX, angleY, angleZ);
             Hand left = Input.Hand(Handed.Left);
             foreach (JointInfo j in jointInfoLeft)
             {
@@ -181,13 +179,6 @@ public void Step()
 
             if (right.tracked.IsActive())
                 rightHandModel.Draw(Matrix.Identity);
-
-
-            //if (Input.Hand(Handed.Left).tracked.IsActive())
-            //    leftHandModel.Draw(Matrix.Identity);
-
-            //if (Input.Hand(Handed.Right).tracked.IsActive())
-            //    leftHandModel.Draw(Matrix.S(V.XYZ(-1, 1, 1)));
         }
 
         // Unceremoniously ripped from https://github.com/maluoi/StereoKit/blob/master/Examples/StereoKitTest/DebugToolWindow.cs, just added some blender parsing.
