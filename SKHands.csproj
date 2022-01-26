@@ -12,9 +12,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\hand.glb" />
+    <None Remove="Assets\leftHand.glb" />
+    <None Remove="Assets\rightHand.glb" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\hand.glb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\leftHand.glb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\rightHand.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

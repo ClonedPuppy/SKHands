@@ -47,8 +47,8 @@ namespace SKHands
         public void Init()
         {
             // Create assets used by the app
-            leftHandModel = Model.FromFile("hand2.glb");
-            rightHandModel = leftHandModel.Copy();
+            leftHandModel = Model.FromFile("leftHand.glb");
+            rightHandModel = Model.FromFile("rightHand.glb");
             floorMaterial = new Material(Shader.FromFile("floor.hlsl"));
             floorMaterial.Transparency = Transparency.Blend;
 
