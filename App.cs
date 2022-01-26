@@ -16,12 +16,13 @@ namespace SKHands
             displayPreference = DisplayMode.MixedReality
         };
 
-        Model    hand;
-        Material floorMaterial;
-        Material jointMaterial;
+        Model       leftHandModel;
+        Model       rightHandModel;
+        Material    floorMaterial;
+        Material    jointMaterial;
 
-        Pose      menuPose;
-        Matrix4x4 floorTransform;
+        Pose        menuPose;
+        Matrix4x4   floorTransform;
 
         struct JointInfo
         {
@@ -35,7 +36,8 @@ namespace SKHands
                 node   = fingerNode;
             }
         }
-        JointInfo[] jointInfo;
+        JointInfo[] jointInfoLeft;
+        JointInfo[] jointInfoRight;
 
         float angleX = -90f;
         float angleY = 0f;
@@ -45,7 +47,8 @@ namespace SKHands
         public void Init()
         {
             // Create assets used by the app
-            hand = Model.FromFile("hand2.glb");
+            leftHandModel = Model.FromFile("hand2.glb");
+            rightHandModel = leftHandModel.Copy();
             floorMaterial = new Material(Shader.FromFile("floor.hlsl"));
             floorMaterial.Transparency = Transparency.Blend;
 
@@ -56,36 +59,62 @@ namespace SKHands
             floorTransform = Matrix.TS(new Vector3(0, -1.5f, 0), new Vector3(30, 0.1f, 30));
 
             Input.HandVisible(Handed.Left, false);
+            Input.HandVisible(Handed.Right, false);
 
             menuPose = new Pose(0.5f, 0, -0.5f, Quat.LookDir(-1, 0, 1));
 
-            jointInfo = new JointInfo[] {
-                new JointInfo(FingerId.Thumb, JointId.KnuckleMajor, hand.FindNode("ThumbMeta")),
-                new JointInfo(FingerId.Thumb, JointId.KnuckleMid,   hand.FindNode("ThumbProxi")),
-                new JointInfo(FingerId.Thumb, JointId.KnuckleMinor, hand.FindNode("ThumbDist")),
+            jointInfoLeft = new JointInfo[] {
+                new JointInfo(FingerId.Thumb, JointId.KnuckleMajor, leftHandModel.FindNode("ThumbMeta")),
+                new JointInfo(FingerId.Thumb, JointId.KnuckleMid,   leftHandModel.FindNode("ThumbProxi")),
+                new JointInfo(FingerId.Thumb, JointId.KnuckleMinor, leftHandModel.FindNode("ThumbDist")),
 
-                new JointInfo(FingerId.Index, JointId.Root,         hand.FindNode("IndexMeta")),
-                new JointInfo(FingerId.Index, JointId.KnuckleMajor, hand.FindNode("IndexProxi")),
-                new JointInfo(FingerId.Index, JointId.KnuckleMid,   hand.FindNode("IndexInter")),
-                new JointInfo(FingerId.Index, JointId.KnuckleMinor, hand.FindNode("IndexDist")),
+                new JointInfo(FingerId.Index, JointId.Root,         leftHandModel.FindNode("IndexMeta")),
+                new JointInfo(FingerId.Index, JointId.KnuckleMajor, leftHandModel.FindNode("IndexProxi")),
+                new JointInfo(FingerId.Index, JointId.KnuckleMid,   leftHandModel.FindNode("IndexInter")),
+                new JointInfo(FingerId.Index, JointId.KnuckleMinor, leftHandModel.FindNode("IndexDist")),
 
-                new JointInfo(FingerId.Middle, JointId.Root,         hand.FindNode("MiddleMeta")),
-                new JointInfo(FingerId.Middle, JointId.KnuckleMajor, hand.FindNode("MiddleProxi")),
-                new JointInfo(FingerId.Middle, JointId.KnuckleMid,   hand.FindNode("MiddleInter")),
-                new JointInfo(FingerId.Middle, JointId.KnuckleMinor, hand.FindNode("MiddleDist")),
+                new JointInfo(FingerId.Middle, JointId.Root,         leftHandModel.FindNode("MiddleMeta")),
+                new JointInfo(FingerId.Middle, JointId.KnuckleMajor, leftHandModel.FindNode("MiddleProxi")),
+                new JointInfo(FingerId.Middle, JointId.KnuckleMid,   leftHandModel.FindNode("MiddleInter")),
+                new JointInfo(FingerId.Middle, JointId.KnuckleMinor, leftHandModel.FindNode("MiddleDist")),
 
-                new JointInfo(FingerId.Ring, JointId.Root,         hand.FindNode("RingMeta")),
-                new JointInfo(FingerId.Ring, JointId.KnuckleMajor, hand.FindNode("RingProxi")),
-                new JointInfo(FingerId.Ring, JointId.KnuckleMid,   hand.FindNode("RingInter")),
-                new JointInfo(FingerId.Ring, JointId.KnuckleMinor, hand.FindNode("RingDist")),
+                new JointInfo(FingerId.Ring, JointId.Root,         leftHandModel.FindNode("RingMeta")),
+                new JointInfo(FingerId.Ring, JointId.KnuckleMajor, leftHandModel.FindNode("RingProxi")),
+                new JointInfo(FingerId.Ring, JointId.KnuckleMid,   leftHandModel.FindNode("RingInter")),
+                new JointInfo(FingerId.Ring, JointId.KnuckleMinor, leftHandModel.FindNode("RingDist")),
 
-                new JointInfo(FingerId.Little, JointId.Root,         hand.FindNode("PinkyMeta")),
-                new JointInfo(FingerId.Little, JointId.KnuckleMajor, hand.FindNode("PinkyProxi")),
-                new JointInfo(FingerId.Little, JointId.KnuckleMid,   hand.FindNode("PinkyInter")),
-                new JointInfo(FingerId.Little, JointId.KnuckleMinor, hand.FindNode("PinkyDist"))};
-        }
+                new JointInfo(FingerId.Little, JointId.Root,         leftHandModel.FindNode("PinkyMeta")),
+                new JointInfo(FingerId.Little, JointId.KnuckleMajor, leftHandModel.FindNode("PinkyProxi")),
+                new JointInfo(FingerId.Little, JointId.KnuckleMid,   leftHandModel.FindNode("PinkyInter")),
+                new JointInfo(FingerId.Little, JointId.KnuckleMinor, leftHandModel.FindNode("PinkyDist"))};
 
-        public void Step()
+            jointInfoRight = new JointInfo[] {
+                new JointInfo(FingerId.Thumb, JointId.KnuckleMajor, rightHandModel.FindNode("ThumbMeta")),
+                new JointInfo(FingerId.Thumb, JointId.KnuckleMid, rightHandModel.FindNode("ThumbProxi")),
+                new JointInfo(FingerId.Thumb, JointId.KnuckleMinor, rightHandModel.FindNode("ThumbDist")),
+
+                new JointInfo(FingerId.Index, JointId.Root, rightHandModel.FindNode("IndexMeta")),
+                new JointInfo(FingerId.Index, JointId.KnuckleMajor, rightHandModel.FindNode("IndexProxi")),
+                new JointInfo(FingerId.Index, JointId.KnuckleMid, rightHandModel.FindNode("IndexInter")),
+                new JointInfo(FingerId.Index, JointId.KnuckleMinor, rightHandModel.FindNode("IndexDist")),
+
+                new JointInfo(FingerId.Middle, JointId.Root, rightHandModel.FindNode("MiddleMeta")),
+                new JointInfo(FingerId.Middle, JointId.KnuckleMajor, rightHandModel.FindNode("MiddleProxi")),
+                new JointInfo(FingerId.Middle, JointId.KnuckleMid, rightHandModel.FindNode("MiddleInter")),
+                new JointInfo(FingerId.Middle, JointId.KnuckleMinor, rightHandModel.FindNode("MiddleDist")),
+
+                new JointInfo(FingerId.Ring, JointId.Root, rightHandModel.FindNode("RingMeta")),
+                new JointInfo(FingerId.Ring, JointId.KnuckleMajor, rightHandModel.FindNode("RingProxi")),
+                new JointInfo(FingerId.Ring, JointId.KnuckleMid, rightHandModel.FindNode("RingInter")),
+                new JointInfo(FingerId.Ring, JointId.KnuckleMinor, rightHandModel.FindNode("RingDist")),
+
+                new JointInfo(FingerId.Little, JointId.Root, rightHandModel.FindNode("PinkyMeta")),
+                new JointInfo(FingerId.Little, JointId.KnuckleMajor, rightHandModel.FindNode("PinkyProxi")),
+                new JointInfo(FingerId.Little, JointId.KnuckleMid, rightHandModel.FindNode("PinkyInter")),
+                new JointInfo(FingerId.Little, JointId.KnuckleMinor, rightHandModel.FindNode("PinkyDist"))};
+}
+
+public void Step()
         {
             if (SK.System.displayType == Display.Opaque)
                 Default.MeshCube.Draw(floorMaterial, floorTransform);
@@ -103,7 +132,7 @@ namespace SKHands
             UI.HSlider("ScaleSlider", ref nodeScale, 0.1f, 1, 0);
             UI.WindowEnd();
 
-            Hand leftHand = Input.Hand(Handed.Left);
+            //Hand leftHand = Input.Hand(Handed.Left);
 
             //// Uncomment for node and axis visualization
             //float scale = Hierarchy.ToLocalDirection(Vec3.UnitX).Magnitude;
@@ -116,13 +145,49 @@ namespace SKHands
             //}
 
             Quat rot = Quat.FromAngles(angleX, angleY, angleZ);
-            foreach (JointInfo j in jointInfo)
+
+            //for (int h = 0; h < (int)Handed.Max; h++)
+            //{
+                //Hand hand = Input.Hand((Handed)h);
+                //foreach (JointInfo j in jointInfo)
+                //{
+                //    HandJoint joint = hand[j.finger, j.joint];
+                //    j.node.ModelTransform = Matrix.TRS(joint.position, joint.orientation * rot, nodeScale);
+                //}
+
+                //if (hand.tracked.IsActive())
+                //    leftHandModel.Draw(Matrix.Identity);
+
+            //}
+
+
+
+            Hand left = Input.Hand(Handed.Left);
+            foreach (JointInfo j in jointInfoLeft)
             {
-                HandJoint joint = leftHand[j.finger, j.joint];
+                HandJoint joint = left[j.finger, j.joint];
                 j.node.ModelTransform = Matrix.TRS(joint.position, joint.orientation * rot, nodeScale);
             }
-            if (leftHand.tracked.IsActive())
-                hand.Draw(Matrix.Identity);
+
+            if (left.tracked.IsActive())
+                leftHandModel.Draw(Matrix.Identity);
+
+            Hand right = Input.Hand(Handed.Right);
+            foreach (JointInfo j in jointInfoRight)
+            {
+                HandJoint joint = right[j.finger, j.joint];
+                j.node.ModelTransform = Matrix.TRS(joint.position, joint.orientation * rot, nodeScale);
+            }
+
+            if (right.tracked.IsActive())
+                rightHandModel.Draw(Matrix.Identity);
+
+
+            //if (Input.Hand(Handed.Left).tracked.IsActive())
+            //    leftHandModel.Draw(Matrix.Identity);
+
+            //if (Input.Hand(Handed.Right).tracked.IsActive())
+            //    leftHandModel.Draw(Matrix.S(V.XYZ(-1, 1, 1)));
         }
 
         // Unceremoniously ripped from https://github.com/maluoi/StereoKit/blob/master/Examples/StereoKitTest/DebugToolWindow.cs, just added some blender parsing.
