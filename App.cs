@@ -23,6 +23,7 @@ namespace SKHands
             floorTransform = Matrix.TS(new Vector3(0, -1.5f, 0), new Vector3(30, 0.1f, 30));
             VRHands.init();
             Utils.init();
+            MenuWindows.init();
             
         }
 
@@ -32,6 +33,7 @@ namespace SKHands
                 Default.MeshCube.Draw(floorMaterial, floorTransform);
             VRHands.ShowHands();
             Utils.ShowAxis();
+            MenuWindows.showMainSettings();
         }
     }
 }
