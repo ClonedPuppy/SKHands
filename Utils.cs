@@ -27,6 +27,26 @@ namespace SKHands
             }
         }
 
+        public static void HandshotPose(Handed hand)
+        {
+            Hand h = Input.Hand(hand);
+            HandJoint[] joints = new HandJoint[27];
+            Array.Copy(h.fingers, 0, joints, 0, 25);
+            joints[25] = new HandJoint(h.palm.position, h.palm.orientation, 0);
+            joints[26] = new HandJoint(h.wrist.position, h.wrist.orientation, 0);
+            recordingHand.Add((Time.Totalf, joints));
+
+            string result = ($"Tests.Hand(new HandJoint[]{{");
+            for (int j = 0; j < joints.Length; j++)
+            {
+                result += $"new HandJoint(V.XYZ({joints[j].position.x:0.000}f,{joints[j].position.y:0.000}f,{joints[j].position.z:0.000}f), new Quat({joints[j].orientation.x:0.000}f,{joints[j].orientation.y:0.000}f,{joints[j].orientation.z:0.000}f,{joints[j].orientation.w:0.000}f), {joints[j].radius:0.000}f)";
+                if (j < joints.Length - 1)
+                    result += ",";
+            }
+            result += "});";
+            Log.Info(result);
+        }
+        
         public static void DumpNodes()
         {
             Hand h = Input.Hand(Handed.Left);

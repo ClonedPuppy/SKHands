@@ -18,7 +18,7 @@ namespace SKHands
             UI.Label("Area 1");
             if (UI.Button("Button 1"))
             {
-                Utils.DumpNodes();
+                Utils.HandshotPose(Handed.Left);
             };
             UI.PanelEnd();
             UI.PanelBegin();

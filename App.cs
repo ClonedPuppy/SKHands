@@ -20,7 +20,7 @@ namespace SKHands
             //// Create assets used by the app
             floorMaterial = new Material(Shader.FromFile("floor.hlsl"));
             floorMaterial.Transparency = Transparency.Blend;
-            floorTransform = Matrix.TS(new Vector3(0, -1.5f, 0), new Vector3(30, 0.1f, 30));
+            floorTransform = Matrix.TS(new Vector3(0, 0f, 0), new Vector3(30, 0.1f, 30));
             VRHands.init();
             Utils.init();
             MenuWindows.init();
