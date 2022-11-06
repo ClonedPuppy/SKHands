@@ -27,7 +27,7 @@ namespace SKHands
             }
         }
 
-        static void DumpNodes()
+        public static void DumpNodes()
         {
             Hand h = Input.Hand(Handed.Left);
             HandJoint[] joints = new HandJoint[27];

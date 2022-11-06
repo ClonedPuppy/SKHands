@@ -16,7 +16,10 @@ namespace SKHands
             UI.WindowBegin("MainSettings", ref mSettingsPose);
             UI.PanelBegin();
             UI.Label("Area 1");
-            UI.Button("Button 1");
+            if (UI.Button("Button 1"))
+            {
+                Utils.DumpNodes();
+            };
             UI.PanelEnd();
             UI.PanelBegin();
             UI.Label("Area 2");
