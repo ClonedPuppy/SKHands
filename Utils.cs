@@ -29,6 +29,7 @@ namespace SKHands
 
         public static void HandshotPose(Handed hand)
         {
+            Hierarchy.ToLocal(Input.Hand(hand).palm);
             Hand h = Input.Hand(hand);
             HandJoint[] joints = new HandJoint[27];
             Array.Copy(h.fingers, 0, joints, 0, 25);
@@ -45,6 +46,7 @@ namespace SKHands
             }
             result += "});";
             Log.Info(result);
+            Hierarchy.Pop();
         }
         
         public static void DumpNodes()
