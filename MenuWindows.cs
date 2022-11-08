@@ -16,7 +16,7 @@ namespace SKHands
             UI.WindowBegin("MainSettings", ref mSettingsPose);
             UI.PanelBegin();
             UI.Label("Area 1");
-            if (UI.Button("Button 1"))
+            if (UI.Button("Button 1") || Input.Key(Key.F8).IsJustActive())
             {
                 Utils.HandshotPose(Handed.Left);
             };

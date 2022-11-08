@@ -9,7 +9,7 @@ namespace SKHands
         {
             appName = "SKHands",
             assetsFolder = "Assets",
-            displayPreference = DisplayMode.MixedReality
+            displayPreference = DisplayMode.Flatscreen
         };
 
         Material    floorMaterial;

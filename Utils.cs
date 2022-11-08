@@ -29,13 +29,11 @@ namespace SKHands
 
         public static void HandshotPose(Handed hand)
         {
-            Hierarchy.ToLocal(Input.Hand(hand).palm);
             Hand h = Input.Hand(hand);
             HandJoint[] joints = new HandJoint[27];
             Array.Copy(h.fingers, 0, joints, 0, 25);
             joints[25] = new HandJoint(h.palm.position, h.palm.orientation, 0);
             joints[26] = new HandJoint(h.wrist.position, h.wrist.orientation, 0);
-            recordingHand.Add((Time.Totalf, joints));
 
             string result = ($"Tests.Hand(new HandJoint[]{{");
             for (int j = 0; j < joints.Length; j++)
@@ -46,7 +44,7 @@ namespace SKHands
             }
             result += "});";
             Log.Info(result);
-            Hierarchy.Pop();
+            DumpNodes();
         }
         
         public static void DumpNodes()
@@ -56,7 +54,6 @@ namespace SKHands
             Array.Copy(h.fingers, 0, joints, 0, 25);
             joints[25] = new HandJoint(h.palm.position, h.palm.orientation, 0);
             joints[26] = new HandJoint(h.wrist.position, h.wrist.orientation, 0);
-            recordingHand.Add((Time.Totalf, joints));
 
             string result = "----------------= Blender code starts here =----------------\n";
             for (int j = 0; j < joints.Length; j++)
